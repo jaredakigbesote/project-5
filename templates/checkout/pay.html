@@ -1,0 +1,24 @@
+<html>
+{% extends "base.html" %}{% block content %}
+<h2>Checkout</h2>
+<p>Booking #{{ booking.id }} — Total €{{ booking.total }}</p>
+<div id="card-element"></div><button id="pay" class="btn btn-primary mt-3">Pay</button>
+<script>
+    const stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+    const elements = stripe.elements();
+    const card = elements.create('card');
+    card.mount('#card-element');
+    document.getElementById('pay').addEventListener('click', async () => {
+        const {
+            error
+        } = await stripe.confirmCardPayment("{{ client_secret }}", {
+            payment_method: {
+                card
+            }
+        });
+        if (error) alert(error.message);
+        else window.location = "/";
+    });
+</script>{% endblock %}
+
+</html>
