@@ -15,8 +15,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.contrib.sitemaps.views import sitemap
+from core.sitemaps import WorkshopSitemap
+from core.views import robots_txt, custom_404
+
+sitemaps={"workshops":WorkshopSitemap()}
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
+    path("accounts/", include("allauth.urls")),
+    path("", include("workshops.urls")),
+    path("checkout/", include("checkout.urls")),
+    path("marketing/", include("marketing.urls")),
+    path("robots.txt", robots_txt, name="robots"),
+    path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
 ]
+handler404 = "core.views.custom_404"
