@@ -35,14 +35,6 @@ CSRF_TRUSTED_ORIGINS = _csv( "CSRF_TRUSTED_ORIGINS", "https://*.gitpod.io,http:/
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2wgrn^lp=4icuw%msbso=+9orb5xnmjdk%!n#r0#r!z)5+v*om'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
