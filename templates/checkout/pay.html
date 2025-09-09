@@ -2,23 +2,66 @@
 {% extends "base.html" %}{% block content %}
 <h2>Checkout</h2>
 <p>Booking #{{ booking.id }} — Total €{{ booking.total }}</p>
-<div id="card-element"></div><button id="pay" class="btn btn-primary mt-3">Pay</button>
+<div id="card-element"  class="mb-3"></div>
+<div id="card-errors" class="text-danger mb-3" role="alert" style="min-height:1.25rem;"></div>
+<button id="pay" class="btn btn-primary mt-3">Pay</button>
+
 <script>
-    const stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+  const pk = "{{ STRIPE_PUBLIC_KEY }}";
+  const clientSecret = "{{ client_secret }}";
+
+  const errorBox = document.getElementById('card-errors');
+  function showErr(msg) { errorBox.textContent = msg || ""; }
+
+  if (!pk || !pk.startsWith('pk_')) {
+    showErr("Payment configuration error (publishable key missing).");
+    return;
+  }
+  if (!clientSecret || !clientSecret.startsWith('pi_')) {
+    showErr("Payment configuration error (client secret missing).");
+    return;
+  }
+    const stripe = Stripe(pk);
     const elements = stripe.elements();
     const card = elements.create('card');
     card.mount('#card-element');
-    document.getElementById('pay').addEventListener('click', async () => {
-        const {
-            error
-        } = await stripe.confirmCardPayment("{{ client_secret }}", {
-            payment_method: {
-                card
-            }
-        });
-        if (error) alert(error.message);
-        else window.location = "/";
-    });
+   
+ card.on('change', function(event) {
+    if (event.error) showErr(event.error.message);
+    else showErr("");
+  });
+
+  const payBtn = document.getElementById('pay');
+  let busy = false;
+  async function handlePay() {
+    if (busy) return;
+    busy = true; payBtn.disabled = true;
+
+    try {
+      const result = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: { card }
+      });
+
+      if (result.error) {
+        showErr(result.error.message || "Payment failed.");
+        payBtn.disabled = false; busy = false;
+        return;
+      }
+
+      if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
+        // success — redirect home or to a success page
+        window.location.href = "/";
+      } else {
+        showErr("Payment did not complete. Status: " + (result.paymentIntent && result.paymentIntent.status));
+        payBtn.disabled = false; busy = false;
+      }
+    } catch (e) {
+      showErr(e.message || "Unexpected error.");
+      payBtn.disabled = false; busy = false;
+    }
+  }
+
+  payBtn.addEventListener('click', handlePay);
 </script>{% endblock %}
 
 </html>
