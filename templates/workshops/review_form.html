@@ -1,0 +1,13 @@
+<html>
+    {% extends "base.html" %}
+{% block content %}
+  <h2>Review {{ w.title }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary">Save</button>
+    <a class="btn btn-secondary" href="{% url 'workshops:detail' w.slug %}">Cancel</a>
+  </form>
+{% endblock %}
+
+</html>
