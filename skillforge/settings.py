@@ -13,23 +13,24 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv, find_dotenv
 import dj_database_url  # for Heroku
-load_dotenv()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = os.getenv("SECRET_KEY", "unsafe-change-me")
 
 dotenv_path = find_dotenv(filename=".env", usecwd=True) or str(BASE_DIR / ".env")
 load_dotenv(dotenv_path)
 
-def _csv(name, default):
+def _csv(name: str, default: str):
     return [x.strip() for x in os.getenv(name, default).split(",") if x.strip()]
 
 
+SECRET_KEY = os.getenv("SECRET_KEY", "unsafe-change-me")
 DEBUG = os.getenv("DEBUG", "1") == "1"
-ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,.herokuapp.com").split(",")]
-CSRF_TRUSTED_ORIGINS = [h.strip() for h in os.getenv("CSRF_TRUSTED_ORIGINS", "https://*.herokuapp.com").split(",")]
+
+
+ALLOWED_HOSTS = _csv("ALLOWED_HOSTS", "localhost,127.0.0.1,.gitpod.io")
+CSRF_TRUSTED_ORIGINS = _csv( "CSRF_TRUSTED_ORIGINS", "https://*.gitpod.io,http://localhost,http://127.0.0.1")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
