@@ -75,5 +75,3 @@ if pi.status == "succeeded" and not booking.paid:
                 )
                 b.paid = True
                 b.save(update_fields=["paid"])
-
-return render(request, "checkout/success.html", {"booking": booking})
