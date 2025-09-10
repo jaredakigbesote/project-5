@@ -46,7 +46,6 @@ class Session(models.Model):
     def save(self, *args, **kwargs):
      if not self.slug:
         self.slug = slugify(f"{self.title}-{self.instructor_id}")
-    super().save(*args, **kwargs)
 
 
 class Review(models.Model):
