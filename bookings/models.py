@@ -12,4 +12,5 @@ class Booking(models.Model):
     stripe_pi=models.CharField(max_length=120, blank=True)
     paid=models.BooleanField(default=False)
     created=models.DateTimeField(auto_now_add=True)
+    
     def __str__(self): return f"{self.user} x{self.quantity} for {self.session}"

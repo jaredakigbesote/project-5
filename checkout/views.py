@@ -2,11 +2,14 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, render
+from django.db import transaction
+from django.db.models import F
 import stripe
 from bookings.models import Booking
 from workshops.models import Session
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+pi = stripe.PaymentIntent.retrieve(booking.stripe_pi)
 
 @login_required
 def start_checkout(request, session_id):
@@ -61,3 +64,16 @@ def start_checkout(request, session_id):
 def success(request, booking_id):
      booking = get_object_or_404(Booking, pk=booking_id, user=request.user)
      return render(request, "checkout/success.html", {"booking": booking})
+
+if pi.status == "succeeded" and not booking.paid:
+        with transaction.atomic():
+            b = Booking.objects.select_for_update().get(pk=booking.pk)
+            if not b.paid:
+                # Increment seats sold atomically
+                Session.objects.filter(pk=b.session_id).update(
+                    seats_sold=F("seats_sold") + b.quantity
+                )
+                b.paid = True
+                b.save(update_fields=["paid"])
+
+return render(request, "checkout/success.html", {"booking": booking})

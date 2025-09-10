@@ -1,7 +1,8 @@
 from django.db import models
 from django.conf import settings
+from django.db.models import F
 from django.core.validators import MinValueValidator, MaxValueValidator
-from django.utils.text import slugify
+from django.utils.text import slugify, timezone
 
 class WorkshopCategory(models.Model):
     name=models.CharField(max_length=80, unique=True)
@@ -34,9 +35,10 @@ class Workshop(models.Model):
     def __str__(self): return self.title
 
 class Session(models.Model):
-    workshop=models.ForeignKey(Workshop,on_delete=models.CASCADE,related_name="sessions")
-    starts_at=models.DateTimeField(); ends_at=models.DateTimeField()
-    capacity=models.PositiveIntegerField(validators=[MinValueValidator(1)])
+    workshop=models.ForeignKey(Workshop,on_delete=models.CASCADE)
+    starts_at=models.DateTimeField(); 
+    ends_at=models.DateTimeField()
+    capacity=models.PositiveIntegerField(default=12)
     seats_sold=models.PositiveIntegerField(default=0)
     location=models.CharField(max_length=180)
     @property
@@ -52,3 +54,5 @@ class Review(models.Model):
     class Meta: unique_together=("workshop","user"); ordering=["-created"]
     def __str__(self): return f"{self.workshop} ★{self.rating}"
 
+def seats_remaining(self):
+        return max(0, self.capacity - self.seats_sold)
