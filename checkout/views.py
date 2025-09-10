@@ -60,24 +60,6 @@ def start_checkout(request, session_id):
         },
     )
 
-import stripe
-from django.conf import settings
-from django.shortcuts import get_object_or_404, render, redirect
-from django.contrib.auth.decorators import login_required
-from django.db import transaction
-from django.db.models import F
-from django.http import HttpResponseBadRequest
-
-from bookings.models import Booking
-from workshops.models import Session
-
-
-@login_required
-def start_checkout(request, session_id):
-    # create PaymentIntent and booking here
-    ...
-
-
 @login_required
 def success(request, booking_id):
     stripe.api_key = settings.STRIPE_SECRET_KEY or ""
