@@ -14,7 +14,8 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 def start_checkout(request, session_id):
     if request.method != "POST":
         # Someone hit the URL directly; redirect back to the session page.
-        return redirect("workshops:detail", slug=get_object_or_404(Session, pk=session_id).workshop.slug)
+        sess = get_object_or_404(Session, pk=session_id)
+        return redirect("workshops:detail", slug=sess.workshop.slug)
 
 
     stripe.api_key = settings.STRIPE_SECRET_KEY or ""
