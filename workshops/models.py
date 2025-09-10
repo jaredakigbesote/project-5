@@ -42,7 +42,8 @@ class Session(models.Model):
     capacity=models.PositiveIntegerField(default=12)
     seats_sold=models.PositiveIntegerField(default=0)
     location=models.CharField(max_length=180)
-    @property
+    related_name="sessions" 
+    
     def seats_remaining(self): return max(0, self.capacity - self.seats_sold)
     def __str__(self): return f"{self.workshop.title} @ {self.starts_at:%Y-%m-%d %H:%M}"
 
