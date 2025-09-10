@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">Payment successful 🎉</h3>
+      <p class="card-text">
+        Thanks, {{ request.user.first_name|default:request.user.username }}!
+      </p>
+      <ul class="list-unstyled">
+        <li><strong>Booking #</strong> {{ booking.id }}</li>
+        <li><strong>Workshop:</strong> {{ booking.session.workshop.title }}</li>
+        <li><strong>Session:</strong> {{ booking.session.starts_at|date:"D, M j, H:i" }}</li>
+        <li><strong>Quantity:</strong> {{ booking.quantity }}</li>
+        <li><strong>Total:</strong> €{{ booking.total }}</li>
+      </ul>
+
+      <a href="{% url 'workshops:detail' booking.session.workshop.slug %}" class="btn btn-primary">Back to workshop</a>
+      <a href="{% url 'workshops:home' %}" class="btn btn-outline-secondary ms-2">Home</a>
+    </div>
+  </div>
+{% endblock %}

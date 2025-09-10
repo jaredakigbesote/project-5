@@ -56,3 +56,8 @@ def start_checkout(request, session_id):
             "STRIPE_PUBLIC_KEY": settings.STRIPE_PUBLIC_KEY,      
         },
     )
+
+@login_required
+def success(request, booking_id):
+     booking = get_object_or_404(Booking, pk=booking_id, user=request.user)
+     return render(request, "checkout/success.html", {"booking": booking})

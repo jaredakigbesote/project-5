@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
         payBtn.disabled = false; busy = false; return;
       }
       if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
-        window.location.href = "/";
+        window.location.href = "{% url 'checkout:success' booking.id %}";
       } else {
         showErr("Payment did not complete. Status: " + (result.paymentIntent && result.paymentIntent.status));
         payBtn.disabled = false; busy = false;
