@@ -25,7 +25,12 @@ def start_checkout(request, session_id):
         qty = int(request.POST.get("quantity", 1))
     except ValueError:
         return HttpResponseBadRequest("Invalid quantity.")
+    if qty < 1:
+        return HttpResponseBadRequest("Invalid quantity.")
 
+    
+    remaining_attr = getattr(sess, "seats_remaining", None)
+    remaining = remaining_attr() if callable(remaining_attr) else remaining_attr
     if qty < 1:
         return HttpResponseBadRequest("Invalid quantity.")
     if qty > sess.seats_remaining:
