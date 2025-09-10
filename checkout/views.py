@@ -9,7 +9,6 @@ from bookings.models import Booking
 from workshops.models import Session
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
-pi = stripe.PaymentIntent.retrieve(booking.stripe_pi)
 
 @login_required
 def start_checkout(request, session_id):
