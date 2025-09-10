@@ -42,9 +42,12 @@ class Session(models.Model):
     capacity=models.PositiveIntegerField(default=12)
     seats_sold=models.PositiveIntegerField(default=0)
     location=models.CharField(max_length=180)
+    @property
+    def save(self, *args, **kwargs):
+     if not self.slug:
+        self.slug = slugify(f"{self.title}-{self.instructor_id}")
+    super().save(*args, **kwargs)
 
-    def seats_remaining(self): return max(0, self.capacity - self.seats_sold)
-    def __str__(self): return f"{self.workshop.title} @ {self.starts_at:%Y-%m-%d %H:%M}"
 
 class Review(models.Model):
     workshop=models.ForeignKey(Workshop,on_delete=models.CASCADE,related_name="reviews")
@@ -54,6 +57,3 @@ class Review(models.Model):
     created=models.DateTimeField(auto_now_add=True)
     class Meta: unique_together=("workshop","user"); ordering=["-created"]
     def __str__(self): return f"{self.workshop} ★{self.rating}"
-
-def seats_remaining(self):
-        return max(0, self.capacity - self.seats_sold)
