@@ -36,14 +36,13 @@ class Workshop(models.Model):
     def __str__(self): return self.title
 
 class Session(models.Model):
-    workshop=models.ForeignKey(Workshop,on_delete=models.CASCADE)
+    workshop=models.ForeignKey(Workshop,on_delete=models.CASCADE, related_name="sessions")
     starts_at=models.DateTimeField(); 
     ends_at=models.DateTimeField()
     capacity=models.PositiveIntegerField(default=12)
     seats_sold=models.PositiveIntegerField(default=0)
     location=models.CharField(max_length=180)
-    related_name="sessions" 
-    
+
     def seats_remaining(self): return max(0, self.capacity - self.seats_sold)
     def __str__(self): return f"{self.workshop.title} @ {self.starts_at:%Y-%m-%d %H:%M}"
 
