@@ -43,9 +43,9 @@ class Session(models.Model):
     seats_sold=models.PositiveIntegerField(default=0)
     location=models.CharField(max_length=180)
     @property
-    def save(self, *args, **kwargs):
-     if not self.slug:
-        self.slug = slugify(f"{self.title}-{self.instructor_id}")
+    def seats_remaining(self):
+        return max(0, self.capacity - self.seats_sold)
+
 
     def __str__(self):
         return f"{self.workshop.title} @ {self.starts_at:%Y-%m-%d %H:%M}"
