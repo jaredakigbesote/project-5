@@ -1,18 +1,30 @@
 
-{% extends "base.html" %}{% block content %}
+{% extends "base.html" %}
+{% block content %}
 <h2>Checkout</h2>
 <p>Booking #{{ booking.id }} — Total €{{ booking.total }}</p>
-<div id="card-element"  class="mb-3"></div>
+
+<div id="card-element" class="mb-3" style="min-height:42px;"></div>
 <div id="card-errors" class="text-danger mb-3" role="alert" style="min-height:1.25rem;"></div>
 <button id="pay" class="btn btn-primary mt-3">Pay</button>
 
+<p class="small text-muted mt-2">
+  pk: {{ STRIPE_PUBLIC_KEY|default:"(missing)"|slice:":7" }}… •
+  secret: {{ client_secret|default:"(missing)"|slice:":3" }}…
+</p>
+
 <script>
+document.addEventListener('DOMContentLoaded', function () {
   const pk = "{{ STRIPE_PUBLIC_KEY }}";
   const clientSecret = "{{ client_secret }}";
 
   const errorBox = document.getElementById('card-errors');
-  function showErr(msg) { errorBox.textContent = msg || ""; }
+  const showErr = (msg) => errorBox && (errorBox.textContent = msg || "");
 
+  if (typeof Stripe === 'undefined') {
+    showErr("Stripe.js failed to load (check base.html includes https://js.stripe.com/v3/).");
+    return;
+  }
   if (!pk || !pk.startsWith('pk_')) {
     showErr("Payment configuration error (publishable key missing).");
     return;
@@ -21,14 +33,14 @@
     showErr("Payment configuration error (client secret missing).");
     return;
   }
-    const stripe = Stripe(pk);
-    const elements = stripe.elements();
-    const card = elements.create('card');
-    card.mount('#card-element');
-   
- card.on('change', function(event) {
-    if (event.error) showErr(event.error.message);
-    else showErr("");
+
+  const stripe = Stripe(pk);
+  const elements = stripe.elements();
+  const card = elements.create('card');
+  card.mount('#card-element');
+
+  card.on('change', function(event) {
+    showErr(event.error ? event.error.message : "");
   });
 
   const payBtn = document.getElementById('pay');
@@ -36,20 +48,13 @@
   async function handlePay() {
     if (busy) return;
     busy = true; payBtn.disabled = true;
-
     try {
-      const result = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: { card }
-      });
-
+      const result = await stripe.confirmCardPayment(clientSecret, { payment_method: { card } });
       if (result.error) {
         showErr(result.error.message || "Payment failed.");
-        payBtn.disabled = false; busy = false;
-        return;
+        payBtn.disabled = false; busy = false; return;
       }
-
       if (result.paymentIntent && result.paymentIntent.status === "succeeded") {
-        // success — redirect home or to a success page
         window.location.href = "/";
       } else {
         showErr("Payment did not complete. Status: " + (result.paymentIntent && result.paymentIntent.status));
@@ -60,7 +65,7 @@
       payBtn.disabled = false; busy = false;
     }
   }
-
   payBtn.addEventListener('click', handlePay);
-</script>{% endblock %}
-
+});
+</script>
+{% endblock %}
