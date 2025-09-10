@@ -47,6 +47,9 @@ class Session(models.Model):
      if not self.slug:
         self.slug = slugify(f"{self.title}-{self.instructor_id}")
 
+    def __str__(self):
+        return f"{self.workshop.title} @ {self.starts_at:%Y-%m-%d %H:%M}"
+
 
 class Review(models.Model):
     workshop=models.ForeignKey(Workshop,on_delete=models.CASCADE,related_name="reviews")
