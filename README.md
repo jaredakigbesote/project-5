@@ -1,131 +1,289 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+# SkillForge 
 
-Welcome jaredakigbesote g,
+SkillForge is an e-commerce Django web application that allows users to browse, book, and review skill-based workshops. The platform supports secure payments via Stripe, authentication, and marketing integrations like a newsletter signup and Facebook page.
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+Live Site: Heroku Deployment Link
 
-You can safely delete this README.md file or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **June 18, 2024**
+## Table of Contents
 
-## Gitpod Reminders
+- Project Overview
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+- Business Model & Marketing Strategy
 
-`python3 -m http.server`
+- User Stories
 
-A blue button should appear to click: _Make Public_,
+- Agile Methodology
 
-Another blue button should appear to click: _Open Browser_.
+- Features
 
-To run a backend Python file, type `python3 app.py` if your Python file is named `app.py`, of course.
+- Database Schema
 
-A blue button should appear to click: _Make Public_,
+- Technologies Used
 
-Another blue button should appear to click: _Open Browser_.
+- Testing
 
-By Default, Gitpod gives you superuser security privileges. Therefore, you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+- Deployment
 
-To log into the Heroku toolbelt CLI:
+- Credits
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+## Project Overview
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you, so do not share it. If you accidentally make it public, you can create a new one with _Regenerate API Key_.
+- SkillForge is a workshop booking platform designed for learners and instructors. Users can:
 
-### Connecting your Mongo database
+- Register/login to manage bookings.
 
-- **Connect to Mongo CLI on a IDE**
-- navigate to your MongoDB Clusters Sandbox
-- click **"Connect"** button
-- select **"Connect with the MongoDB shell"**
-- select **"I have the mongo shell installed"**
-- choose **mongosh (2.0 or later)** for : **"Select your mongo shell version"**
-- choose option: **"Run your connection string in your command line"**
-- in the terminal, paste the copied code `mongo "mongodb+srv://<CLUSTER-NAME>.mongodb.net/<DBname>" --apiVersion 1 --username <USERNAME>`
-  - replace all `<angle-bracket>` keys with your own data
-- enter password _(will not echo **\*\*\*\*** on screen)_
+- Browse workshops, sessions, and reviews.
 
-------
+- Purchase workshop seats securely using Stripe.
 
-## Release History
+- Subscribe to a newsletter for updates.
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+__Admin/staff can:__
 
-**June 18, 2024,** Add Mongo back into template
+- Add/edit workshops, sessions, and instructors.
 
-**June 14, 2024,** Temporarily remove Mongo until the key issue is resolved
+- View bookings and manage categories.
 
-**May 28 2024:** Fix Mongo and Links installs
+## Business Model & Marketing Strategy 
 
-**April 26 2024:** Update node version to 16
+__Business Model__
 
-**September 20 2023:** Update Python version to 3.9.17.
+- Direct-to-Consumer (D2C) services: Customers purchase workshop seats directly.
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+- Digital transactions: Stripe handles secure payments.
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+- Scalable: Admins can add unlimited workshops/sessions.
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+__Marketing Strategy__
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+- Facebook Page: A real/mockup business page showcases workshops and builds community.
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+- Newsletter Signup: Users join a mailing list for promotions and updates.
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+- SEO: Sitemap, robots.txt, and descriptive meta tags implemented.
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+- Retention: Users receive confirmation of bookings and can leave reviews.
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+## User Stories
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+- As a user, I can create an account so I can book workshops.
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+- As a user, I can browse upcoming workshops so I can choose one to attend.
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+- As a user, I can pay securely online so I can confirm my booking.
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+- As a user, I can leave reviews so I can share my experience.
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+- As an admin, I can add/edit workshops so I can manage content without the admin panel.
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+- As an admin, I can see bookings so I know attendance numbers.
 
-------
+## Agile Methodology
 
-## FAQ about the uptime script
+- GitHub Projects board used to manage tasks.
 
-**Why have you added this script?**
+- User stories broken into issues with acceptance criteria.
 
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
+- Feature branches used for development (e.g., feature/checkout, feature/marketing).
 
-**How will this affect me?**
+- Frequent commits with meaningful messages.
 
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
+- Screenshot of GitHub Projects board here
 
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
+## Features
 
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
+- Custom Models (Workshops, Sessions, Bookings, NewsletterSubscriber)
+- CRUD functionality on frontend (workshops, sessions, reviews)
+- Delete UI for reviews
+- User authentication (login, signup, logout)
+- Stripe checkout integration with seat decrement
+- Newsletter signup form
+- Facebook marketing page mockup
+- robots.txt, sitemap.xml, and meta tags for SEO
+- Custom 404 page
+- Responsive design with global CSS
 
-**So….?**
+Screenshots of home, detail, checkout, auth pages here
 
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
+## Database Schema
 
-**Can I opt out?**
+- WorkshopCategory → Workshops → Sessions → Bookings
+- Reviews linked to Workshops
+- NewsletterSubscriber standalone for marketing
 
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
+erDiagram
+  USER ||--|| INSTRUCTOR : "profile of"
+  USER ||--o{ BOOKING : "makes"}
+  USER ||--o{ REVIEW : "writes"}
 
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
+  WORKSHOPCATEGORY ||--o{ WORKSHOP : "has many"}
+  INSTRUCTOR ||--o{ WORKSHOP : "teaches"}
+  WORKSHOP ||--o{ SESSION : "has many"}
+  WORKSHOP ||--o{ REVIEW : "receives"}
+  SESSION ||--o{ BOOKING : "booked by"}
 
-**Anything more?**
+  NEWSLETTERSUBSCRIBER {
+    int id PK
+    varchar email UNIQUE
+    datetime created_at
+  }
 
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+  USER {
+    int id PK
+    varchar username
+    varchar email
+    varchar password
+    datetime date_joined
+  }
 
----
+  INSTRUCTOR {
+    int id PK
+    int user_id FK -> USER.id UNIQUE
+    text bio
+    url website
+  }
 
-Happy coding!
+  WORKSHOPCATEGORY {
+    int id PK
+    varchar name UNIQUE
+    varchar slug UNIQUE
+  }
+
+  WORKSHOP {
+    int id PK
+    int category_id FK -> WORKSHOPCATEGORY.id
+    int instructor_id FK -> INSTRUCTOR.id
+    varchar title
+    varchar slug UNIQUE
+    varchar short_description
+    text description
+    decimal base_price
+    varchar image
+    bool is_active
+    datetime created
+  }
+
+  SESSION {
+    int id PK
+    int workshop_id FK -> WORKSHOP.id
+    datetime starts_at
+    datetime ends_at
+    int capacity
+    int seats_sold
+    varchar location
+  }
+
+  BOOKING {
+    int id PK
+    int user_id FK -> USER.id
+    int session_id FK -> SESSION.id
+    int quantity
+    decimal unit_price
+    decimal total
+    varchar stripe_pi
+    bool paid
+    datetime created
+  }
+
+  REVIEW {
+    int id PK
+    int workshop_id FK -> WORKSHOP.id
+    int user_id FK -> USER.id
+    smallint rating (1..5)
+    text comment
+    datetime created
+    UNIQUE(workshop_id,user_id)
+  }
+
+
+## Technologies Used
+
+- Backend: Django, Python
+
+- Database: PostgreSQL (Heroku)
+
+- Frontend: HTML, CSS, Bootstrap 5
+
+- Payments: Stripe API
+
+- Auth: Django-allauth
+
+- Deployment: Heroku, Gunicorn, WhiteNoise
+
+- Other: dj-database-url, python-dotenv, Pillow
+
+## Testing
+__Code Validation__
+
+- HTML/CSS validated with W3C.
+
+- Python checked with PEP8 (flake8).
+
+__Functional Testing__
+
+- Authentication: login/logout/signup/reset tested.
+
+- Workshops: CRUD verified.
+
+- Booking flow: Seat decrement after payment confirmed.
+
+- Newsletter: Valid/invalid email submissions tested.
+
+- Stripe: Test cards used successfully.
+
+__Responsiveness__
+
+- Tested on Chrome.
+
+__Automated Tests__
+
+- Basic unit tests for models (e.g., slug generation, seat availability) and booking flow.
+
+- Screenshots of testing evidence here
+
+## Deployment
+__Local Development__
+
+- Clone repo
+
+- Create venv & install requirements:
+
+- pip install -r requirements.txt
+
+- Add .env with keys:
+SECRET_KEY=yourkey
+DEBUG=1
+STRIPE_PUBLIC_KEY=pk_test_...
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+ALLOWED_HOSTS=localhost,127.0.0.1,.gitpod.io
+CSRF_TRUSTED_ORIGINS=https://*.gitpod.io,http://localhost
+
+
+- Run server:
+
+- python manage.py runserver 0.0.0.0:8000
+
+__Heroku Deployment__
+
+- Push to GitHub.
+
+- Connect Heroku app → GitHub repo.
+
+- Set config vars (SECRET_KEY, STRIPE_*, etc).
+
+- Add Postgres addon.
+
+- Deploy branch.
+
+- Run python manage.py migrate via Heroku CLI.
+
+## Credits
+
+- Stripe API docs.
+
+- Bootstrap 5.
+
+- Django & django-allauth documentation.
+
+- Code Institute template guidance.
