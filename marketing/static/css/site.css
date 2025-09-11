@@ -339,3 +339,40 @@ footer a:hover {
 
 /* Images */
 img{ max-width:100%; height:auto; display:block }
+
+/* Auth pages */
+.auth-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+}
+
+.auth-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-title {
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.auth-alt {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.auth-alt a {
+  color: var(--brand-primary);
+  text-decoration: none;
+}
+.auth-alt a:hover {
+  text-decoration: underline;
+}
