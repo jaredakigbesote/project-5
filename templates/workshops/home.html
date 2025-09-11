@@ -1,22 +1,37 @@
-<html>
-{% extends "base.html" %}{% block content %}
-<div class=>
-    <h2>Upcoming Workshops</h2>
-    {% if user.is_staff %}<a class="btn btn-success" href="{% url 'workshops:create' %}">New Workshop</a>{% endif %}
-</div>
-<div class="workshop-grid">
-    {% for w in workshops %}
-    <div class="card workshop-card">
-        <a href="{% url 'workshops:detail' w.slug %}" class="thumb">
-          <img src="{{ w.image.url }}" class="card-img-top" alt="{{ w.title }}">
-        </a>
-            <div class="card-body">
-                <h3 class="card-title">{{ w.title }}</h3>
-                <p class="meta">{{ w.category }}• {{ w.instructor }}</p>
-                <p class="price">€{{ w.price }}</p>
-            </div>
-    </div>
-    {% endfor %}
-</div>{% endblock %}
+{% extends "base.html" %}
+{% block title %}Upcoming Workshops — SkillForge{% endblock %}
 
-</html>
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2 class="mb-0">Upcoming Workshops</h2>
+  {% if user.is_staff %}
+    <a href="{% url 'workshops:create' %}" class="btn btn-primary btn-sm">New Workshop</a>
+  {% endif %}
+</div>
+
+<div class="workshop-grid">
+  {% for w in workshops %}
+    <article class="card workshop-card">
+      {% if w.image %}
+        <a href="{% url 'workshops:detail' w.slug %}" class="thumb">
+          <img src="{{ w.image.url }}" alt="{{ w.title }}">
+        </a>
+      {% else %}
+        <a href="{% url 'workshops:detail' w.slug %}" class="thumb"></a>
+      {% endif %}
+
+      <div class="card-body">
+        <h3 class="card-title mb-1">
+          <a href="{% url 'workshops:detail' w.slug %}">{{ w.title }}</a>
+        </h3>
+        <p class="meta mb-2">{{ w.category.name }} • {{ w.instructor }}</p>
+        <div class="d-flex align-items-center">
+          <span class="price">€{{ w.base_price }}</span>
+        </div>
+      </div>
+    </article>
+  {% empty %}
+    <p class="text-muted">No workshops yet — check back soon.</p>
+  {% endfor %}
+</div>
+{% endblock %}
