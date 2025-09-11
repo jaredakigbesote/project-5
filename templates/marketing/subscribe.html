@@ -1,16 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
 <h2>Subscribe to our newsletter</h2>
-<form method="post" class="mt-3">
-  {% csrf_token %}
-  {{ form.non_field_errors }}
-  <div class="mb-3">
-    <label class="form-label">Email</label>
-    {{ form.email }}
-    {% for e in form.email.errors %}
-      <div class="text-danger small">{{ e }}</div>
-    {% endfor %}
-  </div>
-  <button class="btn btn-primary">Subscribe</button>
-</form>
+<div class="newsletter">
+  <form method="post">
+    {% csrf_token %}
+    <label for="email">Subscribe to our newsletter</label>
+    <input type="email" name="email" id="email" required class="form-control d-inline-block">
+    <button class="btn btn-primary">Subscribe</button>
+  </form>
+</div>
+
 {% endblock %}

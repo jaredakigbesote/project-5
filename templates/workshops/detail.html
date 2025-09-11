@@ -24,15 +24,14 @@
             </li>{% empty %}<li class="list-group-item">No upcoming sessions.</li>{% endfor %}
         </ul>
         <h4>Reviews</h4>
-        {% for r in reviews %}
-        <div class="border rounded p-2 mb-2"><strong>★{{ r.rating }}</strong> — {{ r.user.username }}
-            <small class="text-muted">{{ r.created|date:"M d, Y" }}</small>
-            <p class="mb-1">{{ r.comment }}</p>
-            {% if user.is_authenticated and r.user_id == user.id %}
-            <form method="post" action="{% url 'workshops:delete_review' r.id %}"
-                onsubmit="return confirm('Delete this review?');">{% csrf_token %}
-                <button class="btn btn-danger btn-sm">Delete</button>
-            </form>{% endif %}
+        <div>
+            {% for r in workshop.reviews.all %}
+            <div class="review">
+                <div class="stars">{% for i in "12345"|slice:":r.rating" %}★{% endfor %}</div>
+                <p>{{ r.comment }}</p>
+                <small>- {{ r.user }}</small>
+            </div>
+            {% endfor %}
         </div>
         {% empty %}<p>No reviews yet.</p>{% endfor %}
         {% if user.is_authenticated %}
