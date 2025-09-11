@@ -33,7 +33,7 @@
             </div>
             {% endfor %}
         </div>
-        <p>No reviews yet.</p>{% endfor %}
+        <p>No reviews yet.</p>
         {% if user.is_authenticated %}
         <a class="btn btn-outline-secondary" href="{% url 'workshops:add_review' w.slug %}">Write a review</a>
         {% else %}<p><a href="{% url 'account_login' %}">Log in</a> to write a review.</p>{% endif %}
